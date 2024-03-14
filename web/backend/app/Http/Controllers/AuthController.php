@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -40,5 +41,17 @@ class AuthController extends Controller
 
     function check(Request $request){
         return auth()->user();
+    }
+
+    function reset(Request $request){
+        $request->validate(['email' => ['required', 'email']]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+     
+        return $status === Password::RESET_LINK_SENT
+                    ? $status
+                    : response()->json(['message'=>'password reset link was not sent'], 400);
     }
 }
