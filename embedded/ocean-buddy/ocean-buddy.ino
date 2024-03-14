@@ -1,10 +1,20 @@
+#include <WiFiManager.h>
+
 const int soundLevelPin = 32;
 const int photoResistorPin = 4; //Tolerance +-0.1%
 const int salinityLevelPin = 13;
 
-
 void  setup() {
   Serial.begin(9600);
+
+  //Wi-Fi connection
+  /*WiFiManager wm;
+  bool res = wm.autoConnect("AutoConnectAP", "password");
+  if (!res) {
+    Serial.println("Failed to connect");
+  } else {
+    Serial.println("connected...yeey :)");
+  }*/
 }
 
 void loop() {
