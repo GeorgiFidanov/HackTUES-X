@@ -36,6 +36,7 @@ void loop() {
   Serial.println(salinityLevelValue);
   Serial.print("Temperature: ");
   Serial.println(temperatureValue);
+  //check
 
   delay(10000);
 }
