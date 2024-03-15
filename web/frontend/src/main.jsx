@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         element: <Salinity />,
         loader: async () => {
           await requireAuth();
-          return "salinity";
+          return { parameter: "salinity", domain: [0, 5] };
         },
       },
       {
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <Salinity />,
         loader: async () => {
           await requireAuth();
-          return "murkiness";
+          return { parameter: "murkiness", domain: [0, 5] };
         },
       },
       {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <Salinity />,
         loader: async () => {
           await requireAuth();
-          return "noise";
+          return { parameter: "noise", domain: [0, 1] };
         },
       },
       {
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         element: <Salinity />,
         loader: async () => {
           await requireAuth();
-          return "temperature";
+          return { parameter: "temperature", domain: [20, 28] };
         },
       },
     ],

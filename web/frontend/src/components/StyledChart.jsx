@@ -7,17 +7,18 @@ import {
   Tooltip,
   Legend,
   Line,
+  Label,
 } from "recharts";
 
 function StyledChart({ data, type, parameter, domain }) {
   return (
-    <LineChart width={400} height={250} data={data}>
+    <LineChart width={400} height={250} data={data.slice(0, 10)}>
       <CartesianGrid strokeDasharray="1 1" />
-      <XAxis dataKey="timestamp" />
-      <YAxis domain={[10, 15]} />
+      <XAxis hide={true}></XAxis>
+      <YAxis domain={domain} />
       <Tooltip />
       <Legend />
-      <Line dataKey="temperature" stroke="#8884d8" activeDot={{ r: 8 }} />
+      <Line dataKey={parameter} stroke="#8884d8" dot={false} />
     </LineChart>
   );
 }
