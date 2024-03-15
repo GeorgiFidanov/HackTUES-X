@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { IoStatsChart } from "react-icons/io5";
 import { GiSaltShaker } from "react-icons/gi";
@@ -10,45 +10,40 @@ import Dropdown from "./Dropdown";
 import DropdownChoice from "./DropdownChoice";
 import NavButton from "./NavButton";
 import axios from "../bootstrap";
+import { DeviceContext } from "../context/DeviceContext";
 
 function Sidebar() {
-  const [device, setDevice] = useState();
+  const { deviceId, setDeviceId } = useContext(DeviceContext);
   const [devices, setDevices] = useState([]);
+  const [device, setDevice] = useState("");
 
   useEffect(() => {
     const handleGet = async () => {
       const res = await axios.get("/api/devices");
       setDevices(res.data);
-      console.log(res.data);
     };
 
     handleGet();
   }, []);
 
-  useEffect(() => {
-    if (device) {
-      localStorage.setItem("device", device.id);
-      window.dispatchEvent(new Event("storage"));
-    }
-  }, [device]);
-
   return (
     <div className="h-[100vh] bg-primary w-[280px] px-6 py-6 text-neutral-200 fixed">
       <div className="w-16 h-16 rounded-full bg-secondary mx-2"></div>
-      <Dropdown name={device ? device.name : "No device selected"}>
+      <Dropdown name={device ? device : "No device selected"}>
         {devices.map((d) => (
           <DropdownChoice
             key={d.id}
             name={d.name}
             handleChange={(e) => {
-              setDevice({ id: d.id, name: d.name });
+              setDeviceId(d.id);
+              setDevice(d.name);
             }}
           />
         ))}
       </Dropdown>
       <hr className="border-neutral-500" />
       <NavButton to="/" label="Overview" icon={<IoStatsChart />} />
-      <NavButton to="/" label="Salinity" icon={<GiSaltShaker />} />
+      <NavButton to="/salinity" label="Salinity" icon={<GiSaltShaker />} />
       <NavButton to="/" label="Murkiness" icon={<FaWater />} />
       <NavButton to="/" label="Noise" icon={<MdNoiseAware />} />
       <NavButton

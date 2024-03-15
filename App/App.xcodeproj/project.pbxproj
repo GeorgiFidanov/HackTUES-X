@@ -15,6 +15,10 @@
 		9D410B8B2BA3797300CB8DE8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */; };
 		9D410B8F2BA43E1800CB8DE8 /* TempGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */; };
 		9D410B912BA44C3400CB8DE8 /* CurrentStationDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */; };
+		9D410B932BA4692500CB8DE8 /* SalinityGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B922BA4692500CB8DE8 /* SalinityGraphicsView.swift */; };
+		9D410B952BA46D4700CB8DE8 /* NoiseGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B942BA46D4700CB8DE8 /* NoiseGraphicsView.swift */; };
+		9D410B972BA4754800CB8DE8 /* MurkinessGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B962BA4754800CB8DE8 /* MurkinessGraphicsView.swift */; };
+		9D410B9B2BA49AC400CB8DE8 /* ChooseDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B9A2BA49AC400CB8DE8 /* ChooseDeviceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,10 @@
 		9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempGraphicsView.swift; sourceTree = "<group>"; };
 		9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStationDataView.swift; sourceTree = "<group>"; };
+		9D410B922BA4692500CB8DE8 /* SalinityGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalinityGraphicsView.swift; sourceTree = "<group>"; };
+		9D410B942BA46D4700CB8DE8 /* NoiseGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseGraphicsView.swift; sourceTree = "<group>"; };
+		9D410B962BA4754800CB8DE8 /* MurkinessGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurkinessGraphicsView.swift; sourceTree = "<group>"; };
+		9D410B9A2BA49AC400CB8DE8 /* ChooseDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDeviceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,10 @@
 				9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */,
 				9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */,
 				9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */,
+				9D410B922BA4692500CB8DE8 /* SalinityGraphicsView.swift */,
+				9D410B942BA46D4700CB8DE8 /* NoiseGraphicsView.swift */,
+				9D410B962BA4754800CB8DE8 /* MurkinessGraphicsView.swift */,
+				9D410B9A2BA49AC400CB8DE8 /* ChooseDeviceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,6 +172,10 @@
 				9D410B7C2BA363CC00CB8DE8 /* ContentView.swift in Sources */,
 				9D410B8B2BA3797300CB8DE8 /* RegisterView.swift in Sources */,
 				9D410B8F2BA43E1800CB8DE8 /* TempGraphicsView.swift in Sources */,
+				9D410B9B2BA49AC400CB8DE8 /* ChooseDeviceView.swift in Sources */,
+				9D410B972BA4754800CB8DE8 /* MurkinessGraphicsView.swift in Sources */,
+				9D410B932BA4692500CB8DE8 /* SalinityGraphicsView.swift in Sources */,
+				9D410B952BA46D4700CB8DE8 /* NoiseGraphicsView.swift in Sources */,
 				9D410B892BA3775500CB8DE8 /* MainView.swift in Sources */,
 				9D410B7A2BA363CC00CB8DE8 /* AppApp.swift in Sources */,
 				9D410B912BA44C3400CB8DE8 /* CurrentStationDataView.swift in Sources */,

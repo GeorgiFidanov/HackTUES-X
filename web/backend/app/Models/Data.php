@@ -9,10 +9,15 @@ class Data extends Model
 {
     use HasFactory;
 
+    public function device(){
+        return $this->belongsTo(Device::class);
+    }
+
     protected $fillable = [
         'temperature',
         'noise',
         'salinity',
-        'murkiness'
+        'murkiness',
+        'device_id'
     ];
 }
