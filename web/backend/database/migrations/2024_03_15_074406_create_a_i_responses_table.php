@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Device;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data', function (Blueprint $table) {
+        Schema::create('ai_responses', function (Blueprint $table) {
             $table->id();
-            $table->float('temperature');
-            $table->float('noise');
-            $table->float('salinity');
-            $table->float('murkiness');
-            $table->foreignIdFor(Device::class);
+            $table->string('type');
+            $table->string('content');
+            
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data');
+        Schema::dropIfExists('ai_responses');
     }
 };

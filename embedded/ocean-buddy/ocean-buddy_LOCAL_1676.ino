@@ -6,7 +6,6 @@
 #define ID 1
 #include <string>
 
-
 const int soundLevelPin = 32;
 const int photoResistorPin = 4; // Tolerance +-0.1%
 const int salinityLevelPin = 13;
@@ -44,7 +43,6 @@ void loop() {
   Serial.println(httpResponseCode);
   http.end();
 
-
   Serial.println(httpRequestData.c_str());
   Serial.print("Light level - ");
   Serial.println(photoResistorValue);
@@ -58,7 +56,6 @@ void loop() {
   Serial.print("Salinity level - ");
   Serial.println(salinityLevelValue);
   Serial.print("Salinity level volts - ");
-
   Serial.println(voltageSalt);
   Serial.print("Temperature: ");
   Serial.println(temperatureValue);

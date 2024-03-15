@@ -1,19 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../bootstrap";
 
 function Home() {
+  const [device, setDevice] = useState({});
+
   useEffect(() => {
-    const handleGet = async () => {
-      const res = await axios.get("/api/esp");
-      console.log(res.data);
+    const updateStorage = async () => {
+      const res = await axios.get(
+        "/api/device/" + localStorage.getItem("device")
+      );
+      setDevice(res.data);
     };
 
-    handleGet();
-  });
+    window.addEventListener("storage", updateStorage);
+
+    return () => {
+      window.removeEventListener("storage", updateStorage);
+    };
+  }, []);
 
   return (
-    <div className="max-w-[820px] mx-auto flex flex-col justify-center items-center gap-5">
-      <h1>Home</h1>
+    <div className="max-w-[820px] mx-auto flex flex-col justify-center items-center gap-5 h-[100vh]">
+      {device ? (
+        <h1>{device.name}</h1>
+      ) : (
+        <h1>Please select a device to see data</h1>
+      )}
     </div>
   );
 }

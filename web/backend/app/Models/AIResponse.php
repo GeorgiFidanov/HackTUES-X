@@ -5,14 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Data extends Model
+class AIResponse extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'temperature',
-        'noise',
-        'salinity',
-        'murkiness'
-    ];
 }

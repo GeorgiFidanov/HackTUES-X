@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import useAuth from "./hooks/useAuth";
 import axios from "./bootstrap";
+import Sidebar from "./components/Sidebar";
 
 const requireAuth = async () => {
   await axios.get("http://localhost:8000/api/check-auth").catch((e) => {
@@ -25,14 +26,6 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
         path: "/",
         element: <Home />,
         loader: async () => {
@@ -41,6 +34,14 @@ const router = createBrowserRouter([
         },
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 

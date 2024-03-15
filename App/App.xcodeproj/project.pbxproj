@@ -13,6 +13,8 @@
 		9D410B812BA363CE00CB8DE8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D410B802BA363CE00CB8DE8 /* Preview Assets.xcassets */; };
 		9D410B892BA3775500CB8DE8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B882BA3775500CB8DE8 /* MainView.swift */; };
 		9D410B8B2BA3797300CB8DE8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */; };
+		9D410B8F2BA43E1800CB8DE8 /* TempGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */; };
+		9D410B912BA44C3400CB8DE8 /* CurrentStationDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		9D410B802BA363CE00CB8DE8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D410B882BA3775500CB8DE8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempGraphicsView.swift; sourceTree = "<group>"; };
+		9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStationDataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 			children = (
 				9D410B882BA3775500CB8DE8 /* MainView.swift */,
 				9D410B8A2BA3797300CB8DE8 /* RegisterView.swift */,
+				9D410B8E2BA43E1700CB8DE8 /* TempGraphicsView.swift */,
+				9D410B902BA44C3300CB8DE8 /* CurrentStationDataView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -153,8 +159,10 @@
 			files = (
 				9D410B7C2BA363CC00CB8DE8 /* ContentView.swift in Sources */,
 				9D410B8B2BA3797300CB8DE8 /* RegisterView.swift in Sources */,
+				9D410B8F2BA43E1800CB8DE8 /* TempGraphicsView.swift in Sources */,
 				9D410B892BA3775500CB8DE8 /* MainView.swift in Sources */,
 				9D410B7A2BA363CC00CB8DE8 /* AppApp.swift in Sources */,
+				9D410B912BA44C3400CB8DE8 /* CurrentStationDataView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

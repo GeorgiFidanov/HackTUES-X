@@ -2,10 +2,14 @@
 #include <HTTPClient.h>
 #include <stdio.h>
 #include "DHT.h"
+<<<<<<< HEAD
 #define V_REF 3.3
 #define ID 1
 #include <string>
+=======
 
+#define V_REF 3.3
+>>>>>>> f319a5e5941e108322d238b13031b396edc12a44
 
 const int soundLevelPin = 32;
 const int photoResistorPin = 4; // Tolerance +-0.1%
@@ -44,7 +48,7 @@ void loop() {
   Serial.println(httpResponseCode);
   http.end();
 
-
+<<<<<<< HEAD
   Serial.println(httpRequestData.c_str());
   Serial.print("Light level - ");
   Serial.println(photoResistorValue);
@@ -58,7 +62,23 @@ void loop() {
   Serial.print("Salinity level - ");
   Serial.println(salinityLevelValue);
   Serial.print("Salinity level volts - ");
+=======
+  float voltageLight = (photoResistorValue / 4095.0) * V_REF;
+  float voltageSalt = (salinityLevelValue / 4095.0) * V_REF;
+  float voltageSound = (soundLevelValue / 4095.0) * V_REF;
 
+  Serial.print("Light level: ");
+  Serial.println(photoResistorValue);
+  Serial.print("Light voltage: ");
+  Serial.println(voltageLight);
+  Serial.print("Sound level: ");
+  Serial.println(soundLevelValue);
+  Serial.print("Sound voltage: ");
+  Serial.println(voltageSound);
+  Serial.print("Salinity level: ");
+  Serial.println(salinityLevelValue);
+  Serial.print("Salinity voltage: ");
+>>>>>>> f319a5e5941e108322d238b13031b396edc12a44
   Serial.println(voltageSalt);
   Serial.print("Temperature: ");
   Serial.println(temperatureValue);

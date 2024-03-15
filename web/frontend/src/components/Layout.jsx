@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../index.css";
 import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
 function Layout() {
   return (
-    <div className="flex pt-32 mx-auto items-center flex-1">
-      <Outlet />
+    <div>
+      <Sidebar />
+      <div className="ml-[230px]">
+        <Outlet />
+      </div>
     </div>
   );
 }
