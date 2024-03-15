@@ -13,11 +13,12 @@ struct ContentView: View {
     @State private var isLoggedIn = false
     @State private var isRegisterIn = false
     @State private var responseData: [String: Any]?
+    @State private var deviceDataArray: [DeviceData] = []
     
     var body: some View {
         NavigationStack{
             ZStack {
-                Color.white // Background color
+                Color.white
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
@@ -44,8 +45,8 @@ struct ContentView: View {
                         .autocapitalization(.none)
                     
                     Button(action: {
-                        //loginUser()
-                        print("f")
+                        loginUser()
+                        print("fa")
                         isLoggedIn = true
                     }) {
                         Text("Login")
@@ -70,12 +71,13 @@ struct ContentView: View {
                 }
                 
                 .navigationDestination(isPresented: $isLoggedIn) {
-                    MainView(temperature: 32, salinity: 40, noise: 50, murkiness: 60, name: "Station1", location: "Cherno more")
-                        .navigationBarBackButtonHidden(true)
+                    MainView(temperature: 32, salinity: 40, noise: 50, murkiness: 60, name: "Station1", location: "Cherno more", deviceDataArray: $deviceDataArray)
+                            .navigationBarBackButtonHidden(true)
                 }
                 
                 .navigationDestination(isPresented: $isRegisterIn) {
                     RegisterView()
+                    .navigationBarBackButtonHidden(false)
                 }
                 
                 .padding()
@@ -85,11 +87,12 @@ struct ContentView: View {
     }
     
     func loginUser() {
+        //168.166.172
         guard let url = URL(string: "http://172.20.10.3:8000/api/login") else {
             print("Invalid URL")
             return
         }
-        
+    
         let parameters = ["email": email, "password": password]
         
         guard let postData = try? JSONSerialization.data(withJSONObject: parameters) else {
@@ -116,9 +119,14 @@ struct ContentView: View {
             if (200...299).contains(httpResponse.statusCode) {
                 if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) {
                     isLoggedIn = true
-                    responseData = responseJSON as? [String : Any]
-                    print(responseData)
-                    //print("Response:", responseJSON)
+                    let responseData = responseJSON as? [String : Any]
+                    
+                    guard let token = responseData?["token"] as? String else {
+                        print("Token not found in response data")
+                        return
+                    }
+                    
+                    getDeviceData(token: token)
                 } else {
                     print("Invalid JSON response")
                 }
@@ -127,6 +135,54 @@ struct ContentView: View {
             }
         }.resume()
     }
+    
+    func getDeviceData(token: String){
+        print("Token:", token)
+        guard let url = URL(string: "http://172.20.10.3:8000/api/device/1") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+            
+            if (200...299).contains(httpResponse.statusCode) {
+                do {
+                    let decoder = JSONDecoder()
+                    deviceDataArray = try decoder.decode([DeviceData].self, from: data)
+                    //print("Device Data Array:", deviceDataArray[1])
+                } catch {
+                    print("Error decoding JSON:", error)
+                }
+            } else {
+                print("HTTP Error:", httpResponse.statusCode)
+            }
+        }.resume()
+    }
+}
+
+struct DeviceData: Decodable {
+    let id: Int
+    let temperature: Double
+    let noise: Double
+    let salinity: Double
+    let murkiness: Double
+    let device_id: Int
+    let created_at: String
+    let updated_at: String
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -134,3 +190,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
