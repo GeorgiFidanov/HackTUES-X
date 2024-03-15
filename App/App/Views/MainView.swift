@@ -56,11 +56,11 @@ struct MainView: View {
                         Divider().background(Color.black)
                         Text("Noise's data")
                             .padding(.top)
-                        NoiseGraphicsView(dataCollection: ViewModel3())
+                        NoiseGraphicsView(dataCollection: ViewModel3(deviceDataArray: deviceDataArray), deviceDataArray: deviceDataArray)
                         Divider().background(Color.black)
                         Text("Murkines's data")
                             .padding(.top)
-                        MurkinessGraphicsView(dataCollection: ViewModel4())
+                        MurkinessGraphicsView(dataCollection: ViewModel4(deviceDataArray: deviceDataArray), deviceDataArray: deviceDataArray)
                     }
                 }
                 

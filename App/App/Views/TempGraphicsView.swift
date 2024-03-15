@@ -26,7 +26,7 @@ struct TempGraphicsView: View {
             }
             .padding()
             .frame(height: 200)
-            .chartYScale(domain: 22...25)
+            .chartYScale(domain: 25...32)
             
             Text("Time")
             Text("Min: \(String(format: "%.1f", dataCollection.minTemperature)) , Max: \(String(format: "%.1f", dataCollection.maxTemperature)) , Avrg: \(String(format: "%.1f", dataCollection.averageTemperature))")

@@ -26,8 +26,9 @@ struct SalinityGraphicsView: View {
             }
             .padding()
             .frame(height: 200)
-            .chartYScale(domain: 0...2)
+            .chartYScale(domain: 0...3)
             
+            Text("Time")
             Text("Min: \(String(format: "%.1f", dataCollection.minSalinity)) , Max: \(String(format: "%.1f", dataCollection.maxSalinity)) , Avrg: \(String(format: "%.1f", dataCollection.averageSalinity))")
         }
     }

@@ -59,7 +59,7 @@ struct ContentView: View {
                     .padding(.horizontal)
                     
                     Button(action: {
-                     isRegisterIn = true
+                        isRegisterIn = true
                     }) {
                         HStack{
                             Spacer()

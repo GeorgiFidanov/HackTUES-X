@@ -107,7 +107,7 @@ struct RegisterView: View {
             return
         }
         
-        guard let url = URL(string: "http://172.20.10.3:8000/api/register") else {
+        guard let url = URL(string: "http://192.168.166.172:8000/api/register") else {
             print("Invalid URL")
             completion(nil)
             errorMessage = RegistrationError.Error
