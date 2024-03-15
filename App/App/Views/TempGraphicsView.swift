@@ -14,7 +14,6 @@ struct TempGraphicsView: View {
     var deviceDataArray: [DeviceData]
         
     var body: some View {
-        
         let lastTenData = Array(deviceDataArray.suffix(10))
         let dataCollection = ViewModel(deviceDataArray: deviceDataArray)
         

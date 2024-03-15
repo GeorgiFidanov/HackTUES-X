@@ -87,8 +87,9 @@ struct ContentView: View {
     }
     
     func loginUser() {
-        //168.166.172
-        guard let url = URL(string: "http://172.20.10.3:8000/api/login") else {
+        //192.168.166.172 - pavel
+        //172.20.10.3 - petya
+        guard let url = URL(string: "http://192.168.166.172:8000/api/login") else {
             print("Invalid URL")
             return
         }
@@ -138,7 +139,7 @@ struct ContentView: View {
     
     func getDeviceData(token: String){
         print("Token:", token)
-        guard let url = URL(string: "http://172.20.10.3:8000/api/device/1") else {
+        guard let url = URL(string: "http://192.168.166.172:8000/api/device/1") else {
             print("Invalid URL")
             return
         }

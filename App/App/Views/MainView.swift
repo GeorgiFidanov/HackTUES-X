@@ -52,7 +52,7 @@ struct MainView: View {
                         Divider().background(Color.black)
                         Text("Salinity's data")
                             .padding(.top)
-                        SalinityGraphicsView(dataCollection: ViewModel2())
+                        SalinityGraphicsView(dataCollection: ViewModel2(deviceDataArray: deviceDataArray), deviceDataArray: deviceDataArray)
                         Divider().background(Color.black)
                         Text("Noise's data")
                             .padding(.top)
