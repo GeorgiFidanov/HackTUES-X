@@ -6,10 +6,9 @@
 #define ID 1
 #include <string>
 
-
 const int soundLevelPin = 32;
-const int photoResistorPin = 4; // Tolerance +-0.1%
-const int salinityLevelPin = 13;
+const int photoResistorPin = 33; // Tolerance +-0.1%
+const int salinityLevelPin = 35;
 const int temperaturePin = 19; // +-0.5C
 const char* serverName = "http://192.168.166.172:8000/api/data";
 
@@ -18,6 +17,7 @@ DHT dht(temperaturePin, DHT22);
 void setup() {
   Serial.begin(9600);
   dht.begin();
+
   WiFiManager wm;
   bool res = wm.autoConnect("AutoConnectAP", "password");
   if (!res) {
@@ -26,7 +26,6 @@ void setup() {
     Serial.println("connected...yeey :)");
   }
 }
-
 void loop() {
   int photoResistorValue = analogRead(photoResistorPin);
   int soundLevelValue = analogRead(soundLevelPin);
