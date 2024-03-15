@@ -49,7 +49,8 @@ struct RegisterView: View {
                     .autocapitalization(.none)
                 
                 Button(action: {
-                    registerUser()
+                    //registerUser()
+                    print("g")
                 }) {
                     Text("Register")
                 }
@@ -62,8 +63,9 @@ struct RegisterView: View {
                 
             }
             .navigationDestination(isPresented: $isRegisterIn) {
-                    MainView()
+                MainView(temperature: 25.0, salinity: 35.0, noise: 45.0, murkiness: 55.0, name: "Station1", location: "cherno more")
                 }
+                .navigationBarBackButtonHidden(true)
             
             .padding(.top, -100)
         }
