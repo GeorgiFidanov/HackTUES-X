@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DeviceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::post('/esp', function(Request $request){
     return $request->all();
 });
 
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -32,4 +34,6 @@ Route::post('/forgotten-password', [AuthController::class, 'reset']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/check-auth', [AuthController::class, 'check']);
+    Route::get('/devices', [DeviceController::class, 'index']);
+    Route::get('/device/{id}', [DeviceController::class, 'show']);
 });

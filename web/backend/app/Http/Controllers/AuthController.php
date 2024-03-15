@@ -40,7 +40,7 @@ class AuthController extends Controller
     }
 
     function check(Request $request){
-        return auth()->user();
+        return auth()->check();
     }
 
     function reset(Request $request){
