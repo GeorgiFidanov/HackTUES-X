@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Device;
+use App\Models\Data;
 use Illuminate\Http\Request;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
-class DeviceController extends Controller
+class DataController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Device::all();
+        return Data::all();
     }
 
     /**
@@ -20,22 +22,24 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach($request->all() as $entry){
+            Data::create($entry);
+        }
+        return response()->json();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, $id)
+    public function show(Data $data)
     {
-        $limit = $request->query('limit');
-        return Device::find($id)->data()->latest()->take($limit)->get();
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Device $device)
+    public function update(Request $request, Data $data)
     {
         //
     }
@@ -43,7 +47,7 @@ class DeviceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Device $device)
+    public function destroy(Data $data)
     {
         //
     }
