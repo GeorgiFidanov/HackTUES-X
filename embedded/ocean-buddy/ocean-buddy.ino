@@ -38,7 +38,7 @@ void loop() {
   HTTPClient http;
   http.begin(serverName);
   http.addHeader("Content-Type", "application/json");
-  std::string httpRequestData = "{\"device_id\":"+ std::to_string(ID) +",\"temperature\":27,\"noise\":"+ std::to_string(voltageSound) +",\"salinity\":"+ std::to_string(voltageSalt) +",\"murkiness\":"+ std::to_string(voltagePhoto) +"}";
+  std::string httpRequestData = "[{\"device_id\":"+ std::to_string(ID) +",\"temperature\":27,\"noise\":"+ std::to_string(voltageSound) +",\"salinity\":"+ std::to_string(voltageSalt) +",\"murkiness\":"+ std::to_string(voltagePhoto) +"}]";
   int httpResponseCode = http.POST(httpRequestData.c_str());
   Serial.print("HTTP Response code: ");
   Serial.println(httpResponseCode);
