@@ -47,6 +47,7 @@ void loop() {
   Serial.println(voltageSalt);
   Serial.print("Temperature: ");
   Serial.println(temperatureValue);
+  //check
 
   delay(10000);
 }
