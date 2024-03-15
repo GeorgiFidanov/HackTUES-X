@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     TextField("Email", text: $email)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color.gray.opacity(0.3))
                         .cornerRadius(8)
                         .padding(.horizontal)
                         .autocorrectionDisabled()
@@ -44,7 +44,9 @@ struct ContentView: View {
                         .autocapitalization(.none)
                     
                     Button(action: {
-                        loginUser()
+                        //loginUser()
+                        print("f")
+                        isLoggedIn = true
                     }) {
                         Text("Login")
                     }
@@ -68,7 +70,8 @@ struct ContentView: View {
                 }
                 
                 .navigationDestination(isPresented: $isLoggedIn) {
-                    MainView()
+                    MainView(temperature: 32, salinity: 40, noise: 50, murkiness: 60, name: "Station1", location: "Cherno more")
+                        .navigationBarBackButtonHidden(true)
                 }
                 
                 .navigationDestination(isPresented: $isRegisterIn) {
