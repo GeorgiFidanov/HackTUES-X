@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import useAuth from "./hooks/useAuth";
 import axios from "./bootstrap";
 import Sidebar from "./components/Sidebar";
+import Salinity from "./pages/Salinity";
 
 const requireAuth = async () => {
   await axios.get("http://localhost:8000/api/check-auth").catch((e) => {
@@ -31,6 +32,38 @@ const router = createBrowserRouter([
         loader: async () => {
           await requireAuth();
           return null;
+        },
+      },
+      {
+        path: "/salinity",
+        element: <Salinity />,
+        loader: async () => {
+          await requireAuth();
+          return "salinity";
+        },
+      },
+      {
+        path: "/murkiness",
+        element: <Salinity />,
+        loader: async () => {
+          await requireAuth();
+          return "murkiness";
+        },
+      },
+      {
+        path: "/noise",
+        element: <Salinity />,
+        loader: async () => {
+          await requireAuth();
+          return "noise";
+        },
+      },
+      {
+        path: "/temperature",
+        element: <Salinity />,
+        loader: async () => {
+          await requireAuth();
+          return "temperature";
         },
       },
     ],

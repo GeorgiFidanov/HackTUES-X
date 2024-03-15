@@ -29,7 +29,7 @@ class DeviceController extends Controller
     public function show(Request $request, $id)
     {
         $limit = $request->query('limit');
-        return Device::find($id)->data->latest()->take($limit)->get();
+        return Device::find($id)->data()->latest()->take($limit)->get();
     }
 
     /**
