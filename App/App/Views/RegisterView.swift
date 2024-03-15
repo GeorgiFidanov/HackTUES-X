@@ -11,7 +11,9 @@ struct RegisterView: View {
     @State private var email = ""
     @State private var name = ""
     @State private var password = ""
+    @State private var confirmPassword = ""
     @State private var isRegisterIn = false
+    @State private var errorMessage: RegistrationError?
     
     var body: some View {
         ZStack {
@@ -48,9 +50,35 @@ struct RegisterView: View {
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
                 
+                SecureField("Confirm password", text: $confirmPassword)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                    .autocorrectionDisabled()
+                    .autocapitalization(.none)
+                
+                if let errorMessage = errorMessage {
+                    if errorMessage == RegistrationError.passwordsDoNotMatch {
+                        Text("Passwords didn't match!")
+                            .foregroundColor(.red)
+                    } else if errorMessage == RegistrationError.Error {
+                        Text("Error")
+                            .foregroundColor(.red)
+                    }
+                }
+                
                 Button(action: {
-                    //registerUser()
-                    print("g")
+                    //print("g")
+                    //isRegisterIn = true
+                    registerUser { error in
+                        if let error = error {
+                            print("Error:", error.localizedDescription)
+                        } else {
+                            print("Registration successful")
+                            isRegisterIn = true
+                        }
+                    }
                 }) {
                     Text("Register")
                 }
@@ -63,7 +91,7 @@ struct RegisterView: View {
                 
             }
             .navigationDestination(isPresented: $isRegisterIn) {
-                MainView(temperature: 25.0, salinity: 35.0, noise: 45.0, murkiness: 55.0, name: "Station1", location: "cherno more")
+                MainView(temperature: 25.0, salinity: 35.0, noise: 45.0, murkiness: 55.0, name: "Station1", location: "cherno more", deviceDataArray: .constant([]))
                 }
                 .navigationBarBackButtonHidden(true)
             
@@ -71,9 +99,18 @@ struct RegisterView: View {
         }
     }
     
-    func registerUser() {
-        guard let url = URL(string: "http://172.20.10.3:8000/api/register") else {
+    func registerUser(completion: @escaping (Error?) -> Void) {
+        if confirmPassword != password {
+            let error = NSError(domain: "PasswordMismatchError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Passwords do not match"])
+            errorMessage = RegistrationError.passwordsDoNotMatch
+            completion(error)
+            return
+        }
+        
+        guard let url = URL(string: "http://192.168.166.172:8000/api/register") else {
             print("Invalid URL")
+            completion(nil)
+            errorMessage = RegistrationError.Error
             return
         }
         
@@ -91,17 +128,23 @@ struct RegisterView: View {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         } catch let error {
             print("Error serializing parameters: \(error.localizedDescription)")
+            completion(error)
+            errorMessage = RegistrationError.Error
             return
         }
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error:", error.localizedDescription)
+                errorMessage = RegistrationError.Error
+                completion(error)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("Invalid response")
+                errorMessage = RegistrationError.Error
+                completion(nil)
                 return
             }
             
@@ -110,13 +153,24 @@ struct RegisterView: View {
                     if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) {
                         isRegisterIn = true
                         print("Response:", responseJSON)
+                        completion(nil)
                     }
                 }
             } else {
                 print("HTTP Error:", httpResponse.statusCode)
+                errorMessage = RegistrationError.Error
+                completion(nil)
             }
         }.resume()
     }
+}
+
+enum RegistrationError: Error{
+    case passwordsDoNotMatch
+    case invalidURL
+    case HTTPError
+    case Error
+    
 }
 
 #Preview {

@@ -11,6 +11,7 @@ import DropdownChoice from "./DropdownChoice";
 import NavButton from "./NavButton";
 import axios from "../bootstrap";
 import { DeviceContext } from "../context/DeviceContext";
+import logo from "../assets/icon_2x-removebg-preview.png";
 
 function Sidebar() {
   const { deviceId, setDeviceId } = useContext(DeviceContext);
@@ -28,7 +29,7 @@ function Sidebar() {
 
   return (
     <div className="h-[100vh] bg-primary w-[280px] px-6 py-6 text-neutral-200 fixed">
-      <div className="w-16 h-16 rounded-full bg-secondary mx-2"></div>
+      <img src={logo} width={64} height={64} />
       <Dropdown name={device ? device : "No device selected"}>
         {devices.map((d) => (
           <DropdownChoice
@@ -44,10 +45,10 @@ function Sidebar() {
       <hr className="border-neutral-500" />
       <NavButton to="/" label="Overview" icon={<IoStatsChart />} />
       <NavButton to="/salinity" label="Salinity" icon={<GiSaltShaker />} />
-      <NavButton to="/" label="Murkiness" icon={<FaWater />} />
-      <NavButton to="/" label="Noise" icon={<MdNoiseAware />} />
+      <NavButton to="/murkiness" label="Murkiness" icon={<FaWater />} />
+      <NavButton to="/noise" label="Noise" icon={<MdNoiseAware />} />
       <NavButton
-        to="/"
+        to="/temperature"
         label="Temperature"
         icon={<FaTemperatureThreeQuarters />}
       />

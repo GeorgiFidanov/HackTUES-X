@@ -2,6 +2,8 @@ import openai
 from dotenv import load_dotenv
 import os
 from requests import get, post
+import re
+import json
 
 load_dotenv()
 OpenAiKey = os.getenv("OpenAiKey")
@@ -35,7 +37,7 @@ def generate_prediction(water_state, location):
     Water turbidity sensor - photoresistor(LDR) and LED
     Water salinity sensor - HW-038
     Temperature sensor - DHT22 
-    We can't allow temperature values outside of  0.99V to 1.32V.
+    We can't allow temperature values outside of  10 to 20 degrees Celsius.
     Noise level sensor - KY-038
 
     The recorded data is as follows:
@@ -64,12 +66,72 @@ def generate_prediction(water_state, location):
         return f"An error occurred: {e}"
 
 
-data_response = get('http://192.168.166.172:8000' + '/api/device/1',
-        headers={'Authorization': f"Bearer 1|QxgMeCdh0gPN5anMGBmzXEWaVxRTereN3NjWUWIj9dd1cd74"})
+def parse_string(input_string):
+    # Define a regular expression pattern to extract "Type" and "Content"
+    pattern = r'Type: (\w+)\s+\((\w+)\)\s+(.+)'
 
-location = "Black sea"
-print(data_response.content.decode('utf-8'))
-prediction = generate_prediction(data_response, location)
+    # Use re.match to search for the pattern in the input string
+    match = re.match(pattern, input_string)
+
+    if match:
+        # Extract "Type", "Category", and "Content" from the matched groups
+        type_info = match.group(1)
+        category_info = match.group(2)
+        content_info = match.group(3)
+
+        # Construct the output dictionary
+        output = {
+            "type": type_info,
+            "category": category_info,
+            "content": content_info
+        }
+
+        return output
+    else:
+        return None
 
 
-print(prediction)
+def get_predictions_for_a_device(id, location):
+
+    data_response = get('http://192.168.166.172:8000' + f'/api/device/{id}?limit=6',
+            headers={'Authorization': f"Bearer 2|Hh6F8p6jgW3ZI6QB1JFT4d373ZBdqeMyR6Xgl4mNd9376768"})
+    print(data_response.content.decode('utf-8'))
+
+    prediction = generate_prediction(data_response.content.decode('utf-8'), location)
+    print(prediction)
+
+    parsed_prediction = parse_string(prediction)
+    print(parsed_prediction)
+
+    data = {
+        "type": parsed_prediction['type'],
+        "content": parsed_prediction['content'],
+        "device_id": id
+    }
+
+    response = post(
+                'http://192.168.166.172:8000' + '/api/airesponse',
+                data=data
+            )
+    if response.status_code == 200:
+        print("Request successful!")
+
+    else:
+        print(f"Request failed with status code {response.status_code}")
+    
+
+def get_devices_and_locations():
+    response = get('http://192.168.166.172:8000' + '/api/aidevices')
+    
+    try:
+        print(response.json())
+        devices = response.json()
+        for device in devices:
+            print(device['id'], device['location'])
+            get_predictions_for_a_device(device['id'], device['location'])
+    except json.JSONDecodeError:
+        print("Error: Response is not in valid JSON format.")
+    except TypeError:
+        print("Error: Unexpected data structure in response.")
+
+get_devices_and_locations()
