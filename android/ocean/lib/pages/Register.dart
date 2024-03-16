@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ocean/pages/Choose_device.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../components/TextPlaceholder.dart';
 import '../components/SecurePlaceholder.dart';
-import '../components/Button.dart';
+import 'Get_device_data.dart';
 
-import 'Choose_device.dart';
 
 class Register extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -90,7 +88,7 @@ class Register extends StatelessWidget {
         // Assuming there's a screen to navigate after registration
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Choose_device()),
+          MaterialPageRoute(builder: (context) => DeviceDetailsPage(token: token)),
         );
         print(token);
       } else {

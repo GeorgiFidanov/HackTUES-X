@@ -5,9 +5,8 @@ import 'dart:convert';
 import '../components/TextPlaceholder.dart';
 import '../components/SecurePlaceholder.dart';
 import '../components/TextButton.dart';
-import '../components/Button.dart';
 
-import 'Choose_device.dart'; // Importing Choose_device.dart file
+import 'Get_device_data.dart';
 
 void main() {
   runApp(MainApp());
@@ -100,7 +99,9 @@ class LoginForm extends StatelessWidget {
         final token = responseData['token'] as String;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Choose_device()),
+          MaterialPageRoute(
+            builder: (context) => DeviceDetailsPage(token: token),
+          ),
         );
         print(token);
       } else {
