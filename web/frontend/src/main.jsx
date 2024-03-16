@@ -14,7 +14,7 @@ import Home from "./pages/Home";
 import useAuth from "./hooks/useAuth";
 import axios from "./bootstrap";
 import Sidebar from "./components/Sidebar";
-import Salinity from "./pages/Salinity";
+import Stat from "./pages/Stat";
 
 const requireAuth = async () => {
   await axios.get("http://localhost:8000/api/check-auth").catch((e) => {
@@ -36,15 +36,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/salinity",
-        element: <Salinity />,
+        element: <Stat />,
         loader: async () => {
+          console.log("hello");
           await requireAuth();
           return { parameter: "salinity", domain: [0, 5] };
         },
       },
       {
         path: "/murkiness",
-        element: <Salinity />,
+        element: <Stat />,
         loader: async () => {
           await requireAuth();
           return { parameter: "murkiness", domain: [0, 5] };
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/noise",
-        element: <Salinity />,
+        element: <Stat />,
         loader: async () => {
           await requireAuth();
           return { parameter: "noise", domain: [0, 1] };
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/temperature",
-        element: <Salinity />,
+        element: <Stat />,
         loader: async () => {
           await requireAuth();
           return { parameter: "temperature", domain: [20, 28] };

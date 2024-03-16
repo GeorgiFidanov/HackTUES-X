@@ -6,13 +6,23 @@ import { DeviceContext } from "../context/DeviceContext";
 function Home() {
   const { deviceId, setDeviceId } = useContext(DeviceContext);
   const [data, setData] = useState([]);
+  const [risk, setRisk] = useState(false);
 
   useEffect(() => {
     const updateStorage = async () => {
       const res = await axios.get("/api/device/" + deviceId);
       setData(res.data);
+      console.log(res.data);
+      const r = await axios.get("/api/airesponse/" + deviceId);
+      r.data.forEach((obj) => {
+        if (obj.type.toLowerCase() == "risk") {
+          setRisk(true);
+          console.log("here");
+          return;
+        }
+      });
     };
-    if (deviceId) {
+    if (typeof deviceId !== "object") {
       updateStorage();
     }
   }, [deviceId]);
@@ -21,7 +31,7 @@ function Home() {
     <div className="max-w-[820px] mx-auto flex flex-col justify-center items-center gap-5 h-[100vh]">
       {deviceId ? (
         <>
-          <div className="flex flex-row flex-wrap gap-4">
+          <div className="flex flex-row flex-wrap gap-4 justify-center">
             <StyledChart
               type="big"
               parameter="temperature"
@@ -46,6 +56,12 @@ function Home() {
               domain={[0, 1]}
               data={data}
             />
+            {risk && (
+              <h1 className="text-red-700">
+                The environment is at risk! Check if all parameters are within
+                normal ranges!
+              </h1>
+            )}
           </div>
         </>
       ) : (

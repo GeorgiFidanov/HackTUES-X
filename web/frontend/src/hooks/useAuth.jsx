@@ -15,6 +15,7 @@ const useAuth = () => {
 
     const res = await axios.post("/api/login", props);
     setToken("token", res.data.token);
+    window.dispatchEvent(new Event("storage"));
     navigate("/");
   };
 
@@ -23,14 +24,16 @@ const useAuth = () => {
 
     const res = await axios.post("/api/register", props);
     setToken("token", res.data.token);
+    window.dispatchEvent(new Event("storage"));
     navigate("/");
   };
 
-  const logout = async ({ ...props }) => {
+  const logout = async () => {
     csrf();
 
-    await axios.post("/logout", props);
+    await axios.get("/api/logout");
     removeToken();
+    window.dispatchEvent(new Event("storage"));
     navigate("/login");
   };
 

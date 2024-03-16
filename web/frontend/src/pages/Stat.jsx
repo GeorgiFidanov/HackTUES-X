@@ -11,29 +11,31 @@ import axios from "../bootstrap";
 import { DeviceContext } from "../context/DeviceContext";
 import { useLoaderData } from "react-router-dom";
 
-function Salinity() {
+function Stat() {
   const { parameter, domain } = useLoaderData();
   const [rows, setRows] = useState([]);
   const { deviceId } = useContext(DeviceContext);
-
-  console.log("hi");
+  const [risk, setRisk] = useState(false);
 
   useEffect(() => {
     const updateStorage = async () => {
-      if (!deviceId) {
-        console.log(deviceId);
-      } else {
-        const res = await axios.get("/api/device/" + deviceId);
-        setRows(res.data);
-        console.log(rows);
-      }
+      const res = await axios.get("/api/device/" + deviceId);
+      setRows(res.data);
+      const r = await axios.get("/api/airesponse/" + deviceId);
+      r.data.forEach((obj) => {
+        if (obj.type.toLowerCase() == "risk") {
+          setRisk(true);
+          return;
+        }
+      });
     };
-
-    updateStorage();
+    if (typeof deviceId !== "object") {
+      updateStorage();
+    }
   }, [deviceId]);
 
   return (
-    <div className="max-w-[820px] mx-auto flex flex-col justify-center p-32 gap-5">
+    <div className="max-w-[820px] mx-auto flex flex-col justify-center p-32 gap-5 items-center">
       {rows ? (
         <StyledChart
           type="big"
@@ -43,6 +45,12 @@ function Salinity() {
         />
       ) : (
         <p>wait</p>
+      )}
+      {risk && (
+        <h1 className="text-red-700">
+          The environment is at risk! Check if all parameters are within normal
+          ranges!
+        </h1>
       )}
       <Table>
         <TableHead>
@@ -68,4 +76,4 @@ function Salinity() {
   );
 }
 
-export default Salinity;
+export default Stat;
