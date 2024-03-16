@@ -13,6 +13,10 @@ class Device extends Model
         return $this->hasMany(Data::class);
     }
 
+    public function responses(){
+        return $this->hasMany(AIResponse::class);
+    }
+
     protected $fillable = [
         'name',
         'location',

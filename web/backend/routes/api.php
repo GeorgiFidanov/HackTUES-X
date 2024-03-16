@@ -42,7 +42,9 @@ Route::post('/airesponse', [AIResponseController::class, 'store']);
 Route::post('/forgotten-password', [AuthController::class, 'reset']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/check-auth', [AuthController::class, 'check']);
     Route::get('/devices', [DeviceController::class, 'index']);
     Route::get('/device/{id}', [DeviceController::class, 'show']);
+    Route::get('/airesponse/{id}', [AIResponseController::class, 'show']);
 });

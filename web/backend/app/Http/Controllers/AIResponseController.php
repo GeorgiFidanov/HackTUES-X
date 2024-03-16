@@ -28,9 +28,9 @@ class AIResponseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AIResponse $aIResponse)
+    public function show($id)
     {
-        //
+        return AIResponse::where('device_id', '=', $id)->get();
     }
 
     /**

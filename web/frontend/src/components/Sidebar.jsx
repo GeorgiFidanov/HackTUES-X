@@ -12,11 +12,14 @@ import NavButton from "./NavButton";
 import axios from "../bootstrap";
 import { DeviceContext } from "../context/DeviceContext";
 import logo from "../assets/icon_2x-removebg-preview.png";
+import useAuth from "../hooks/useAuth";
 
 function Sidebar() {
   const { deviceId, setDeviceId } = useContext(DeviceContext);
   const [devices, setDevices] = useState([]);
   const [device, setDevice] = useState("");
+
+  const { logout } = useAuth();
 
   useEffect(() => {
     const handleGet = async () => {
@@ -26,6 +29,11 @@ function Sidebar() {
 
     handleGet();
   }, []);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  };
 
   return (
     <div className="h-[100vh] bg-primary w-[280px] px-6 py-6 text-neutral-200 fixed">
@@ -52,7 +60,13 @@ function Sidebar() {
         label="Temperature"
         icon={<FaTemperatureThreeQuarters />}
       />
-      <NavButton to="/" label="Log out" icon={<CiLogout />} />
+      <button
+        onClick={handleLogout}
+        className="flex flex-row w-full gap-5 items-center hover:bg-secondary mt-5 rounded-lg px-4 py-2"
+      >
+        <CiLogout />
+        <h1>Log out</h1>
+      </button>
     </div>
   );
 }
