@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../components/TextPlaceholder.dart';
-import '../components/SecurePlaceholder.dart';
-import '../components/TextButton.dart';
+import 'components/TextPlaceholder.dart';
+import 'components/SecurePlaceholder.dart';
+import 'components/TextButton.dart';
 
-import 'Get_device_data.dart';
+import 'pages/Get_device_data.dart';
 
 void main() {
   runApp(MainApp());
