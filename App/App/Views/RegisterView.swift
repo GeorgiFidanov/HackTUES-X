@@ -14,6 +14,7 @@ struct RegisterView: View {
     @State private var confirmPassword = ""
     @State private var isRegisterIn = false
     @State private var errorMessage: RegistrationError?
+    @State private var deviceDataArray: [DeviceData] = []
     
     var body: some View {
         ZStack {
@@ -91,7 +92,7 @@ struct RegisterView: View {
                 
             }
             .navigationDestination(isPresented: $isRegisterIn) {
-                MainView(temperature: 25.0, salinity: 35.0, noise: 45.0, murkiness: 55.0, name: "Station1", location: "cherno more", deviceDataArray: .constant([]))
+                MainView(temperature: 25.0, salinity: 35.0, noise: 45.0, murkiness: 55.0, name: "Station1", location: "cherno more", deviceDataArray: $deviceDataArray)
                 }
                 .navigationBarBackButtonHidden(true)
             
@@ -133,6 +134,12 @@ struct RegisterView: View {
             return
         }
         
+        /*URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }*/
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error:", error.localizedDescription)
@@ -140,6 +147,12 @@ struct RegisterView: View {
                 completion(error)
                 return
             }
+            
+            guard let data = data else {
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("Invalid response")
@@ -149,17 +162,69 @@ struct RegisterView: View {
             }
             
             if (200...299).contains(httpResponse.statusCode) {
-                if let data = data {
+                /*if let data = data {
                     if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) {
                         isRegisterIn = true
                         print("Response:", responseJSON)
                         completion(nil)
                     }
+                }*/
+                if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) {
+                    isRegisterIn = true
+                    let responseData = responseJSON as? [String : Any]
+                    
+                    guard let token = responseData?["token"] as? String else {
+                        print("Token not found in response data")
+                        return
+                    }
+                    
+                    //print(responseData)
+                    
+                    getDeviceData(token: token)
+                } else {
+                    print("Invalid JSON response")
                 }
             } else {
                 print("HTTP Error:", httpResponse.statusCode)
                 errorMessage = RegistrationError.Error
                 completion(nil)
+            }
+        }.resume()
+    }
+    
+    func getDeviceData(token: String){
+        print("Token:", token)
+        guard let url = URL(string: "http://192.168.166.172:8000/api/device/1") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+            
+            if (200...299).contains(httpResponse.statusCode) {
+                do {
+                    let decoder = JSONDecoder()
+                    deviceDataArray = try decoder.decode([DeviceData].self, from: data)
+                    //print("Device Data Array:", deviceDataArray[1])
+                } catch {
+                    print("Error decoding JSON:", error)
+                }
+            } else {
+                print("HTTP Error:", httpResponse.statusCode)
             }
         }.resume()
     }

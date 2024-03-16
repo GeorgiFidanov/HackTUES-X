@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AIResponseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\DeviceController;
+use App\Models\AIResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -30,8 +32,12 @@ Route::post('/esp', function(Request $request){
 Route::get('/data', [DataController::class, 'index']);
 Route::post('/data', [DataController::class, 'store']);
 
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/aidevices', [AIResponseController::class, 'index']);
+Route::post('/airesponse', [AIResponseController::class, 'store']);
 
 Route::post('/forgotten-password', [AuthController::class, 'reset']);
 
