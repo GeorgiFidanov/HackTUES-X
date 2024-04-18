@@ -47,7 +47,7 @@ void setup() {
     Serial.println("connected...yeey :)");
   }
 
-  timer.attach(600.0, sendData);
+  timer.attach(6.0, sendData);
 }
 void loop() {
 
