@@ -9,6 +9,10 @@ class AIResponse extends Model
 {
     use HasFactory;
 
+    public function device(){
+        return $this->belongsTo(Device::class);
+    }
+
     protected $fillable = [
         'type',
         'content',
